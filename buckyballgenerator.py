@@ -1,6 +1,4 @@
 
-
-
 def generator():
     indx = [[5, 6, 2],
             [1, 7, 3],
