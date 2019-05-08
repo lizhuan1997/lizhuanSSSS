@@ -12,7 +12,6 @@ def energy_per_config(structure, vector):
 
 
 structure, edges = generator()
-
 iteration = 100000
 E_min = -66
 E_max = 90
@@ -37,7 +36,7 @@ start = time.time()
 while(True):
     f = f/2
     print(f)
-    if f < 10e-6:
+    if f < 10e-4:
         break
     for E in range(E_min, E_max+1):
         Hist[E] = 0
@@ -65,20 +64,20 @@ while(True):
                 Hist[energy1] += 1
                 
         error = np.std(np.array(list(Hist.values()))) / np.mean(np.array(list(Hist.values()))) - 1
-        # print("ERROR", error)
         if error < 0.05:
             break
 print(logG)
 
-X = list(range(-66, 91))
-Y = np.zeros(91+66)
-for i in range(91+66):
+X = list(range(E_min, E_max + 1))
+Y = np.zeros(E_max - E_min + 1)
+for i in range(Y.shape):
     Y[i] = logG[X[i]]
 
-Y = np.exp(Y - 479.88743591308594)
-Y = [Y[i] for i in np.arange(0, 66+90, 2)]
-# print(Y[0]/sum(Y)* 2**60)
-E = (np.arange(-66, 90, 2))
+
+Y = [Y[i] for i in np.arange(0, E_max - E_min, 2)]
+Y = np.exp(Y - np.min(Y))
+print(Y[0] / np.sum(Y) * 2**60)
+E = (np.arange(E_min, E_max, 2))
 Z = np.dot(Y, np.exp(-E))/sum(Y)*2**60
 stop = time.time()
 
