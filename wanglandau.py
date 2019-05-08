@@ -36,7 +36,7 @@ start = time.time()
 while(True):
     f = f/2
     print(f)
-    if f < 10e-4:
+    if f < 10e-6:
         break
     for E in range(E_min, E_max+1):
         Hist[E] = 0
@@ -64,7 +64,7 @@ while(True):
                 Hist[energy1] += 1
                 
         error = np.std(np.array(list(Hist.values()))) / np.mean(np.array(list(Hist.values()))) - 1
-        if error < 0.04:
+        if error < 0.05:
             break
 print(logG)
 
@@ -73,9 +73,14 @@ Y = np.zeros(E_max - E_min + 1)
 for i in range(Y.shape[0]):
     Y[i] = logG[X[i]]
 
-
+Y_remove = [Y[i] for i in np.arange(0, E_max - E_min, 2)]
 Y = [Y[i] for i in np.arange(0, E_max - E_min, 2)]
-Y = np.exp(Y - np.min(Y))
+
+while 1 in Y_remove:
+    Y_remove.remove(1)
+
+Y = np.exp(Y - np.min(Y_remove))
+print(np.min(Y_remove))
 print(Y[0] / np.sum(Y) * 2**60)
 E = (np.arange(E_min, E_max, 2))
 Z = np.dot(Y, np.exp(-E))/sum(Y)*2**60
