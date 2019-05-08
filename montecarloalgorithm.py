@@ -7,14 +7,11 @@ import scipy.io as sio
 
 def energy_per_config(structure, vector):
     energy = 0
-    
     for edge in edges:
         i = edge[0]
         j = edge[1]
         energy += J * vector[i] * vector[j]
     return energy
-
-
 structure, edges = generator()
 
 
