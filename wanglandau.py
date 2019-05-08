@@ -64,13 +64,13 @@ while(True):
                 Hist[energy1] += 1
                 
         error = np.std(np.array(list(Hist.values()))) / np.mean(np.array(list(Hist.values()))) - 1
-        if error < 0.05:
+        if error < 0.04:
             break
 print(logG)
 
 X = list(range(E_min, E_max + 1))
 Y = np.zeros(E_max - E_min + 1)
-for i in range(Y.shape):
+for i in range(Y.shape[0]):
     Y[i] = logG[X[i]]
 
 
