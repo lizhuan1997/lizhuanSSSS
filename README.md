@@ -16,3 +16,7 @@ We use similar exhaustive sampling to compute partition function Z.
 ### 3. Wang-Landau Algorithm
 
 `wanglandau.py` and `Wang.m`.
+
+### 4. Counting method
+`buckyball.pdf` .
+We count the number of ground state configuration directly.
