@@ -3,7 +3,7 @@ import networkx as nx
 import time
 import matplotlib.pyplot as plt
 from buckyballgenerator import generator
-import scipy.io as sio
+
 
 def energy_per_config(structure, vector):
     energy = 0
@@ -15,11 +15,11 @@ def energy_per_config(structure, vector):
 structure, edges = generator()
 
 
-RANGE = 500000
+RANGE = 1000000
 X = []
 Y = []
 # for RANGE in np.arange(10000, 1000000, 10000):
-beta = 1
+beta = 1.5
 J = 1
 start = time.time()
 statematrix = []
@@ -40,7 +40,7 @@ for k in range(RANGE):
         for i in range(3):
             oldEnergy += J * statevector[j] * statevector[neigh[i]]
             newEnergy += J * flip * statevector[neigh[i]]
-            gap = oldEnergy - newEnergy
+        gap = oldEnergy - newEnergy
         if gap > 0:
             statevector[j] = flip
         else:
@@ -71,7 +71,7 @@ def ground_state_counter(RANGE, statematrix, structure):
         if energy == -66:
             state.append(statevec)
     state = np.unique(state, axis=0)
-    return state.shape[0]
+    return state.shape[0], state
 
 def compZ(statematrix, structure, beta):
     stateunique = np.unique(statematrix, axis=0)
@@ -93,14 +93,8 @@ def compEntropy(statematrix, RANGE):
         entropy += freq * np.log(freq)
     return entropy
 
-Num = ground_state_counter(RANGE, statematrix, structure)
+Num, state = ground_state_counter(RANGE, statematrix, structure)
 avg_Z = compZ(statematrix, structure, beta)
 print(RANGE, Num, avg_Z)
-#     X.append(RANGE)
-#     Y.append(avg_Z)
-# print(X)
-# print(Y)
 
-# plt.figure()
-# plt.plot(X, Y)
-# plt.show()
+sio.savemat('satisfystate.mat', {'satisfy': state})
