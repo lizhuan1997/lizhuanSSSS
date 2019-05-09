@@ -10,9 +10,9 @@ We use `buckyballgenerator.py` to generator the buckyball, including edges, node
 Tensor network gives the most accurate solution.
 ### 2. Monte Carlo simulation
 `MCMC.m` and ` montecarloalgorithm.py`.
-We exhaustively search for all possible ground state configurations. After about 1 million times sampling we obtain configuration number.
+We exhaustively search for all possible ground state configurations. After about 1 million times sampling we obtain the configuration number.
 
-We use similar exhaustive sampling to compute partition function Z.
+We use similar exhaustive sampling to compute partition function Z. Not accurate, but useful for validation.
 ### 3. Wang-Landau Algorithm
 
 `wanglandau.py` and `Wang.m`.
